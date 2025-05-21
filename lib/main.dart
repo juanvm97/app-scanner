@@ -1,3 +1,5 @@
+import 'package:app_scanner/screens/home_screen.dart';
+import 'package:app_scanner/screens/product_list_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,9 +24,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Escáner de Código de Barras',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      initialRoute: '/home',
+      routes: {
+        '/home': (context) => const HomeScreen(),
+        '/scanner': (context) => const BarcodeScannerScreen(),
+        '/product-list': (context) => ProductListScreen(),
+      },
     );
   }
 }
