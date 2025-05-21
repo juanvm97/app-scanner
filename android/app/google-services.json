@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "444199715264",
+    "project_id": "app-scanner-cbef8",
+    "storage_bucket": "app-scanner-cbef8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444199715264:android:435a881086231daceb0825",
+        "android_client_info": {
+          "package_name": "com.example.app_scanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhk1i85E0PC5E_mrifqRqjZzw8GDKtHHs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
