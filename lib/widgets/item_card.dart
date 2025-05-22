@@ -20,18 +20,19 @@ class ItemCard extends StatelessWidget {
           SizedBox(width: 64, child: Text(item.name)),
           SizedBox(width: 36, child: Text(item.price.toString())),
           SizedBox(width: 36, child: Text(item.quantity.toString())),
+          SizedBox(width: 36, child: Text(item.total.toString())),
           Row(
             children: [
               IconButton(
                 icon: const Icon(Icons.remove),
                 onPressed: () {
-                  // Decrementar
+                  ListService().updateItemQuantity(item.id, item.quantity - 1);
                 },
               ),
               IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: () {
-                  // Incrementar
+                  ListService().updateItemQuantity(item.id, item.quantity + 1);
                 },
               ),
               IconButton(

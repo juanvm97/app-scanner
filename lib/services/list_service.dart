@@ -39,4 +39,11 @@ class ListService {
   Future<void> removeItem(String id) async {
     await itemsRef.doc(id).delete();
   }
+
+  Future<void> updateItemQuantity(String id, int quantity) async {
+    if (quantity < 0) {
+      quantity = 0;
+    }
+    await itemsRef.doc(id).update({'quantity': quantity});
+  }
 }

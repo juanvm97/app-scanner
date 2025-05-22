@@ -11,6 +11,8 @@ class Item {
     required this.quantity,
   });
 
+  double get total => price * quantity;
+
   factory Item.fromDocument(String id, Map<String, dynamic> data) {
     return Item(
       id: id,

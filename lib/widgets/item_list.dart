@@ -29,6 +29,7 @@ class ItemList extends StatelessWidget {
                   SizedBox(width: 64, child: Text('Nombre')),
                   SizedBox(width: 64, child: Text('Precio')),
                   SizedBox(width: 64, child: Text('Cantidad')),
+                  SizedBox(width: 64, child: Text('Total')),
                   SizedBox(width: 128),
                 ],
               ),
