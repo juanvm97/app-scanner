@@ -13,6 +13,7 @@ class AddItemScreen extends ConsumerWidget {
     final formKey = GlobalKey<FormState>();
     final nameController = TextEditingController();
     final priceController = TextEditingController();
+    final quantityController = TextEditingController(text: '1');
     final barcodeController = TextEditingController(text: code);
 
     return Scaffold(
@@ -79,6 +80,22 @@ class AddItemScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 16),
               TextFormField(
+                controller: quantityController,
+                decoration: const InputDecoration(labelText: 'Cantidad'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Por favor ingrese la cantidad';
+                  }
+                  final quantity = int.tryParse(value);
+                  if (quantity == null || quantity <= 0) {
+                    return 'Por favor ingrese una cantidad válida';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
                 controller: barcodeController,
                 decoration: const InputDecoration(
                   labelText: 'Código de Barras',
@@ -96,11 +113,13 @@ class AddItemScreen extends ConsumerWidget {
                   if (formKey.currentState?.validate() ?? false) {
                     final name = nameController.text;
                     final price = double.parse(priceController.text);
+                    final quantity = int.parse(quantityController.text);
                     final barcode = barcodeController.text;
                     ListService().addItem(
                       id: barcode,
                       name: name,
                       price: price,
+                      quantity: quantity,
                     );
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Producto agregado')),

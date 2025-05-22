@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_scanner/models/product.dart';
+import 'package:app_scanner/models/item.dart';
 import 'package:app_scanner/services/list_service.dart';
+import 'package:app_scanner/widgets/item_list.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
@@ -15,7 +16,7 @@ class ListScreen extends StatelessWidget {
         child: Column(
           children: [
             StreamBuilder(
-              stream: ListService().getProductsStream(),
+              stream: ListService().getItemsStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -28,34 +29,8 @@ class ListScreen extends StatelessWidget {
                     child: Text('No hay productos disponibles'),
                   );
                 }
-                final products = snapshot.data as List<Product>;
-                return Expanded(
-                  child: ListView.separated(
-                    separatorBuilder:
-                        (context, index) => const SizedBox(height: 16),
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      final product = products[index];
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 16.0,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(product.name),
-                            Text(product.price.toString()),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                );
+                final items = snapshot.data as List<Item>;
+                return ItemList(items: items);
               },
             ),
           ],

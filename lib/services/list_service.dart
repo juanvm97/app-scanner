@@ -1,5 +1,6 @@
-import 'package:app_scanner/models/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:app_scanner/models/item.dart';
 
 class ListService {
   final CollectionReference itemsRef = FirebaseFirestore.instance
@@ -9,18 +10,18 @@ class ListService {
       .doc('uZqNTu237Bj6Mq7BhaCT')
       .collection('items');
 
-  Stream<List<Product>> getProductsStream() {
+  Stream<List<Item>> getItemsStream() {
     return itemsRef.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
-        return Product.fromDocument(doc.id, doc.data() as Map<String, dynamic>);
+        return Item.fromDocument(doc.id, doc.data() as Map<String, dynamic>);
       }).toList();
     });
   }
 
-  Future<List<Product>> getProductsOnce() async {
+  Future<List<Item>> getItemsOnce() async {
     final snapshot = await itemsRef.get();
     return snapshot.docs.map((doc) {
-      return Product.fromDocument(doc.id, doc.data() as Map<String, dynamic>);
+      return Item.fromDocument(doc.id, doc.data() as Map<String, dynamic>);
     }).toList();
   }
 
@@ -28,10 +29,14 @@ class ListService {
     required String id,
     required String name,
     required double price,
+    required int quantity,
   }) async {
-    final product = Product(id: id, name: name, price: price);
+    final item = Item(id: id, name: name, price: price, quantity: quantity);
 
-    // Usamos `set()` para crear el documento con un ID específico
-    await itemsRef.doc(id).set(product.toMap());
+    await itemsRef.doc(id).set(item.toMap());
+  }
+
+  Future<void> removeItem(String id) async {
+    await itemsRef.doc(id).delete();
   }
 }
