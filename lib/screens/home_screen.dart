@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 100),
             Center(
               child: FilledButton(
-                onPressed: () => Navigator.pushNamed(context, '/product-list'),
+                onPressed: () => Navigator.pushNamed(context, '/list'),
                 child: Text("CREAR"),
               ),
             ),

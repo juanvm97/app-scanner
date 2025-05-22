@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:app_scanner/models/product.dart';
 import 'package:app_scanner/services/list_service.dart';
 
-class ProductListScreen extends StatelessWidget {
-  const ProductListScreen({super.key});
+class ListScreen extends StatelessWidget {
+  const ListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +14,8 @@ class ProductListScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            FutureBuilder(
-              future: ListService().getProductsOnce(),
+            StreamBuilder(
+              stream: ListService().getProductsStream(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -63,7 +63,7 @@ class ProductListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your action here
+          Navigator.pushNamed(context, '/add-item');
         },
         child: const Icon(Icons.add),
       ),

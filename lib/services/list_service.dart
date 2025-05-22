@@ -23,4 +23,15 @@ class ListService {
       return Product.fromDocument(doc.id, doc.data() as Map<String, dynamic>);
     }).toList();
   }
+
+  Future<void> addItem({
+    required String id,
+    required String name,
+    required double price,
+  }) async {
+    final product = Product(id: id, name: name, price: price);
+
+    // Usamos `set()` para crear el documento con un ID específico
+    await itemsRef.doc(id).set(product.toMap());
+  }
 }
