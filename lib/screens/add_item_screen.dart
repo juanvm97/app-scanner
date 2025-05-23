@@ -1,3 +1,4 @@
+import 'package:app_scanner/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -49,6 +50,39 @@ class AddItemScreen extends ConsumerWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 16),
+              SearchAnchor.bar(
+                barHintText: 'Buscar productos...',
+                constraints: BoxConstraints.expand(
+                  width: double.infinity,
+                  height: 50,
+                ),
+                suggestionsBuilder: (
+                  BuildContext context,
+                  SearchController controller,
+                ) async {
+                  if (controller.text.length < 3) {
+                    return [];
+                  }
+                  final products = await ProductService().searchProductsByName(
+                    controller.text,
+                  );
+                  return products.map((product) {
+                    return ListTile(
+                      title: Text(product.name),
+                      subtitle: Text('Precio: \$${product.price}'),
+                      onTap: () {
+                        nameController.text = product.name;
+                        priceController.text = product.price.toString();
+                        quantityController.text = '1';
+                        barcodeController.text = product.id;
+                        controller.closeView(product.name);
+                      },
+                    );
+                  }).toList();
+                },
+              ),
+              const SizedBox(height: 32),
               TextFormField(
                 controller: nameController,
                 decoration: const InputDecoration(
@@ -108,26 +142,28 @@ class AddItemScreen extends ConsumerWidget {
                 },
               ),
               const SizedBox(height: 32),
-              ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState?.validate() ?? false) {
-                    final name = nameController.text;
-                    final price = double.parse(priceController.text);
-                    final quantity = int.parse(quantityController.text);
-                    final barcode = barcodeController.text;
-                    ListService().addItem(
-                      id: barcode,
-                      name: name,
-                      price: price,
-                      quantity: quantity,
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Producto agregado')),
-                    );
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text('Agregar Producto'),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState?.validate() ?? false) {
+                      final name = nameController.text;
+                      final price = double.parse(priceController.text);
+                      final quantity = int.parse(quantityController.text);
+                      final barcode = barcodeController.text;
+                      ListService().addItem(
+                        id: barcode,
+                        name: name,
+                        price: price,
+                        quantity: quantity,
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Producto agregado')),
+                      );
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Agregar Producto'),
+                ),
               ),
             ],
           ),

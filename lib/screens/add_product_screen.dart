@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:app_scanner/services/data_service.dart';
+import 'package:app_scanner/services/product_service.dart';
 
 class AddProductScreen extends StatefulWidget {
   final String productId;
@@ -40,7 +40,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
                 if (name.isNotEmpty && price > 0) {
                   // Llamamos a la función addProduct del DataService
-                  await DataService().addProduct(
+                  await ProductService().addProduct(
                     id: widget.productId,
                     name: name,
                     price: price,

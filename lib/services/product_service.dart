@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:app_scanner/models/product.dart';
 
-class DataService {
+class ProductService {
   final CollectionReference productsRef = FirebaseFirestore.instance.collection(
     'products',
   );
@@ -14,8 +14,6 @@ class DataService {
     required double price,
   }) async {
     final product = Product(id: id, name: name, price: price);
-
-    // Usamos `set()` para crear el documento con un ID específico
     await productsRef.doc(id).set(product.toMap());
   }
 
@@ -43,7 +41,7 @@ class DataService {
         docSnapshot.data() as Map<String, dynamic>,
       );
     } else {
-      return null; // Si el producto no existe
+      return null;
     }
   }
 
@@ -58,5 +56,13 @@ class DataService {
   /// Eliminar un producto por ID
   Future<void> deleteProduct(String id) async {
     await productsRef.doc(id).delete();
+  }
+
+  Future<List<Product>> searchProductsByName(String name) async {
+    final snapshot = await productsRef.orderBy('name').startAt([name]).get();
+
+    return snapshot.docs.map((doc) {
+      return Product.fromDocument(doc.id, doc.data() as Map<String, dynamic>);
+    }).toList();
   }
 }
