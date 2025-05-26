@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-import 'package:app_scanner/providers/code_provider.dart';
+import 'package:app_scanner/providers/item_controller.dart';
 
 class BarcodeScannerScreen extends ConsumerWidget {
   const BarcodeScannerScreen({super.key});
@@ -15,8 +15,8 @@ class BarcodeScannerScreen extends ConsumerWidget {
         onDetect: (capture) {
           final barcodes = capture.barcodes;
           if (barcodes.isNotEmpty) {
-            final String code = barcodes.first.rawValue ?? "---";
-            ref.read(messageProvider.notifier).update(code);
+            final String code = barcodes.first.rawValue ?? "";
+            ref.read(itemStateNotifierProvider.notifier).update(code);
             Navigator.pop(context);
           }
         },

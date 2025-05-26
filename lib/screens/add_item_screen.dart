@@ -1,21 +1,26 @@
-import 'package:app_scanner/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app_scanner/providers/code_provider.dart';
-import 'package:app_scanner/services/list_service.dart';
+import 'package:app_scanner/providers/item_controller.dart';
+import 'package:app_scanner/services/product_service.dart';
 
 class AddItemScreen extends ConsumerWidget {
   const AddItemScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final code = ref.watch(messageProvider);
+    final code = ref.watch(itemStateNotifierProvider).code;
     final formKey = GlobalKey<FormState>();
     final nameController = TextEditingController();
     final priceController = TextEditingController();
     final quantityController = TextEditingController(text: '1');
-    final barcodeController = TextEditingController(text: code);
+    final barcodeController = TextEditingController();
+    if (code.isNotEmpty) {
+      nameController.text = ref.watch(itemStateNotifierProvider).name;
+      priceController.text =
+          ref.watch(itemStateNotifierProvider).price.toString();
+      barcodeController.text = code;
+    }
 
     return Scaffold(
       body: Padding(
@@ -150,12 +155,9 @@ class AddItemScreen extends ConsumerWidget {
                       final price = double.parse(priceController.text);
                       final quantity = int.parse(quantityController.text);
                       final barcode = barcodeController.text;
-                      ListService().addItem(
-                        id: barcode,
-                        name: name,
-                        price: price,
-                        quantity: quantity,
-                      );
+                      ref
+                          .read(itemStateNotifierProvider.notifier)
+                          .addItem(barcode, name, price, quantity);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Producto agregado')),
                       );
