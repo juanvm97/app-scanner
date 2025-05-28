@@ -19,7 +19,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Escáner de Código de Barras',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 241, 249, 254),
+        primarySwatch: MaterialColor(0xFF49B7EE, {
+          50: Color(0xFFF1F9FE),
+          100: Color(0xFFE2F1FC),
+          200: Color(0xFFBEE3F9),
+          300: Color(0xFF84CEF5),
+          400: Color(0xFF49B7EE),
+          500: Color(0xFF1A9BDD),
+          600: Color(0xFF0D7CBC),
+          700: Color(0xFF0C6298),
+          800: Color(0xFF0E547E),
+          900: Color(0xFF114769),
+        }),
         textTheme: TextTheme(
           headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
         ),

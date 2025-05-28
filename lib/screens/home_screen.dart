@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
               "Crea una lista",
               style: Theme.of(context).textTheme.headlineLarge,
             ),
-            SizedBox(height: 128),
+            SizedBox(height: 32),
             ShoppingLists(),
             SizedBox(height: 128),
             Center(

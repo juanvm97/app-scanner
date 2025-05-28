@@ -20,7 +20,7 @@ class ItemList extends StatelessWidget {
                 horizontal: 16.0,
               ),
               decoration: BoxDecoration(
-                color: const Color.fromARGB(5, 0, 0, 0),
+                color: const Color(0xFF84CEF5),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
