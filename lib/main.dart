@@ -17,9 +17,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Escáner de Código de Barras',
+      title: 'Lista de Compras',
       theme: ThemeData(
+        useMaterial3: true,
         scaffoldBackgroundColor: const Color.fromARGB(255, 241, 249, 254),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF49B7EE),
+          primary: const Color(0xFF49B7EE),
+          secondary: const Color(0xFF1A9BDD),
+          tertiary: const Color(0xFF0D7CBC),
+          surface: const Color(0xFFF1F9FE),
+          error: const Color(0xFFFF5252),
+          onPrimary: Colors.white,
+          onSecondary: Colors.white,
+          onTertiary: Colors.white,
+          onSurface: Colors.black87,
+          onError: Colors.white,
+        ),
         primarySwatch: MaterialColor(0xFF49B7EE, {
           50: Color(0xFFF1F9FE),
           100: Color(0xFFE2F1FC),

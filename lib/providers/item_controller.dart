@@ -39,6 +39,20 @@ class ItemStateNotifier extends _$ItemStateNotifier {
     state = state.copyWith(listId: listId);
   }
 
+  Future<String> addList(String name) async {
+    state = state.copyWith(isLoading: true);
+    final listId = await ListService().addShoppingList(name);
+    state = state.copyWith(isLoading: false);
+
+    return listId;
+  }
+
+  Future<void> removeList(String listId) async {
+    state = state.copyWith(isLoading: true);
+    await ListService().removeShoppingList(listId);
+    state = state.copyWith(isLoading: false, listId: '');
+  }
+
   void addItem(String barcode, String name, double price, int quantity) async {
     state = state.copyWith(isLoading: true);
     if (state.isNew) {

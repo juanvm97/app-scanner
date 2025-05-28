@@ -15,6 +15,7 @@ class ItemList extends StatelessWidget {
         itemBuilder: (context, index) {
           if (index == 0) {
             return Container(
+              height: 56,
               padding: const EdgeInsets.symmetric(
                 vertical: 8.0,
                 horizontal: 16.0,

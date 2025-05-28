@@ -10,6 +10,7 @@ final appRouter = GoRouter(
     GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
     GoRoute(
       path: '/list/:id',
+      name: 'list',
       builder: (context, state) {
         final listId = state.pathParameters['id']!;
         return ListScreen(listId: listId);

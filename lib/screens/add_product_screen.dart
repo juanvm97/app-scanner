@@ -46,8 +46,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     name: name,
                     price: price,
                   );
-
-                  context.pop();
+                  if (context.mounted) {
+                    context.pop();
+                  }
                 } else {
                   // Si los campos son inválidos
                   ScaffoldMessenger.of(context).showSnackBar(

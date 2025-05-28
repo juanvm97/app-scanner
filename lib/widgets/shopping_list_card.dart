@@ -1,4 +1,5 @@
 import 'package:app_scanner/models/shopping_list.dart';
+import 'package:app_scanner/providers/item_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -31,7 +32,9 @@ class ShoppingListCard extends ConsumerWidget {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () {
-                  // ListService().removeItem(item.id);
+                  ref
+                      .read(itemStateNotifierProvider.notifier)
+                      .removeList(list.id);
                 },
               ),
             ],

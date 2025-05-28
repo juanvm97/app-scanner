@@ -4,12 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:app_scanner/models/item.dart';
 
 class ListService {
-  final CollectionReference itemsRef = FirebaseFirestore.instance
-      .collection('users')
-      .doc('54321')
-      .collection('lists')
-      .doc('uZqNTu237Bj6Mq7BhaCT')
-      .collection('items');
   final CollectionReference listsRef = FirebaseFirestore.instance
       .collection('users')
       .doc('54321')
@@ -23,6 +17,22 @@ class ListService {
         doc.data() as Map<String, dynamic>,
       );
     }).toList();
+  }
+
+  Future<String> addShoppingList(String name) async {
+    final newList = ShoppingList(id: '', name: name);
+    final documentReference = await listsRef.add(newList.toMap());
+
+    return documentReference.id;
+  }
+
+  Future<void> removeShoppingList(String id) async {
+    final ref = FirebaseFirestore.instance
+        .collection('users')
+        .doc('54321')
+        .collection('lists')
+        .doc(id);
+    await ref.delete();
   }
 
   Stream<List<Item>> getItemsStream(String listId) {
@@ -61,14 +71,30 @@ class ListService {
     await ref.doc(id).set(item.toMap());
   }
 
-  Future<void> removeItem(String id) async {
-    await itemsRef.doc(id).delete();
+  Future<void> removeItem(String listId, String id) async {
+    final ref = FirebaseFirestore.instance
+        .collection('users')
+        .doc('54321')
+        .collection('lists')
+        .doc(listId)
+        .collection('items');
+    await ref.doc(id).delete();
   }
 
-  Future<void> updateItemQuantity(String id, int quantity) async {
+  Future<void> updateItemQuantity(
+    String listId,
+    String id,
+    int quantity,
+  ) async {
     if (quantity < 0) {
       quantity = 0;
     }
-    await itemsRef.doc(id).update({'quantity': quantity});
+    final ref = FirebaseFirestore.instance
+        .collection('users')
+        .doc('54321')
+        .collection('lists')
+        .doc(listId)
+        .collection('items');
+    await ref.doc(id).update({'quantity': quantity});
   }
 }
