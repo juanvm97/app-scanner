@@ -6,12 +6,12 @@ part of 'item_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$itemStateNotifierHash() => r'ff25a5b0826d4ec9cd617b8d3d28ec7e71803886';
+String _$itemStateNotifierHash() => r'8f93d3ca59a105139f6f11d1245505b0546de88d';
 
 /// See also [ItemStateNotifier].
 @ProviderFor(ItemStateNotifier)
 final itemStateNotifierProvider =
-    AutoDisposeNotifierProvider<ItemStateNotifier, ItemState>.internal(
+    NotifierProvider<ItemStateNotifier, ItemState>.internal(
       ItemStateNotifier.new,
       name: r'itemStateNotifierProvider',
       debugGetCreateSourceHash:
@@ -22,6 +22,6 @@ final itemStateNotifierProvider =
       allTransitiveDependencies: null,
     );
 
-typedef _$ItemStateNotifier = AutoDisposeNotifier<ItemState>;
+typedef _$ItemStateNotifier = Notifier<ItemState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:app_scanner/services/product_service.dart';
+import 'package:go_router/go_router.dart';
 
 class AddProductScreen extends StatefulWidget {
   final String productId;
@@ -46,8 +47,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     price: price,
                   );
 
-                  // Una vez agregado el producto, podemos regresar a la página anterior
-                  Navigator.pop(context);
+                  context.pop();
                 } else {
                   // Si los campos son inválidos
                   ScaffoldMessenger.of(context).showSnackBar(

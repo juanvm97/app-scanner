@@ -6,14 +6,14 @@ import 'package:app_scanner/services/product_service.dart';
 
 part 'item_controller.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class ItemStateNotifier extends _$ItemStateNotifier {
   @override
   ItemState build() {
     return ItemState();
   }
 
-  void update(String code) async {
+  void setCode(String code) async {
     state = state.copyWith(isLoading: true);
     final product = await ProductService().getProductById(code);
     if (product != null) {
@@ -35,6 +35,10 @@ class ItemStateNotifier extends _$ItemStateNotifier {
     }
   }
 
+  void setListId(String listId) {
+    state = state.copyWith(listId: listId);
+  }
+
   void addItem(String barcode, String name, double price, int quantity) async {
     state = state.copyWith(isLoading: true);
     if (state.isNew) {
@@ -45,6 +49,7 @@ class ItemStateNotifier extends _$ItemStateNotifier {
       name: name,
       price: price,
       quantity: quantity,
+      listId: state.listId,
     );
     state = state.copyWith(isLoading: false, code: '');
   }

@@ -1,4 +1,6 @@
+import 'package:app_scanner/widgets/shopping_lists.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,10 +23,12 @@ class _HomeScreenState extends State<HomeScreen> {
               "Crea una lista",
               style: Theme.of(context).textTheme.headlineLarge,
             ),
-            SizedBox(height: 100),
+            SizedBox(height: 128),
+            ShoppingLists(),
+            SizedBox(height: 128),
             Center(
               child: FilledButton(
-                onPressed: () => Navigator.pushNamed(context, '/list'),
+                onPressed: () => context.push('/list/1234'),
                 child: Text("CREAR"),
               ),
             ),

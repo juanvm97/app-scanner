@@ -1,11 +1,30 @@
+import 'package:app_scanner/providers/item_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_scanner/models/item.dart';
 import 'package:app_scanner/services/list_service.dart';
 import 'package:app_scanner/widgets/item_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class ListScreen extends StatelessWidget {
-  const ListScreen({super.key});
+class ListScreen extends ConsumerStatefulWidget {
+  final String listId;
+
+  const ListScreen({required this.listId, super.key});
+
+  @override
+  ConsumerState<ListScreen> createState() => _ListScreenState();
+}
+
+class _ListScreenState extends ConsumerState<ListScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(itemStateNotifierProvider.notifier).setListId(widget.listId);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +35,7 @@ class ListScreen extends StatelessWidget {
         child: Column(
           children: [
             StreamBuilder(
-              stream: ListService().getItemsStream(),
+              stream: ListService().getItemsStream(widget.listId),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
@@ -38,7 +57,7 @@ class ListScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/add-item');
+          context.push('/add-item');
         },
         child: const Icon(Icons.add),
       ),

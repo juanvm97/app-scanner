@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:app_scanner/providers/item_controller.dart';
 import 'package:app_scanner/services/product_service.dart';
+import 'package:go_router/go_router.dart';
 
 class AddItemScreen extends ConsumerWidget {
   const AddItemScreen({super.key});
@@ -38,7 +39,7 @@ class AddItemScreen extends ConsumerWidget {
                       IconButton(
                         icon: const Icon(Icons.arrow_back),
                         onPressed: () {
-                          Navigator.pop(context);
+                          context.pop();
                         },
                       ),
                       const Text(
@@ -50,7 +51,7 @@ class AddItemScreen extends ConsumerWidget {
                   IconButton(
                     icon: const Icon(Icons.barcode_reader),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/scanner');
+                      context.push('/scanner');
                     },
                   ),
                 ],
@@ -161,7 +162,7 @@ class AddItemScreen extends ConsumerWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Producto agregado')),
                       );
-                      Navigator.pop(context);
+                      context.pop();
                     }
                   },
                   child: const Text('Agregar Producto'),

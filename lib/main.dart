@@ -1,12 +1,9 @@
+import 'package:app_scanner/router/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:app_scanner/screens/add_item_screen.dart';
-import 'package:app_scanner/screens/home_screen.dart';
-import 'package:app_scanner/screens/list_screen.dart';
 import 'package:app_scanner/firebase_options.dart';
-import 'package:app_scanner/screens/barcode_scanner_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Escáner de Código de Barras',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -27,14 +24,8 @@ class MyApp extends StatelessWidget {
           headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
         ),
       ),
+      routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
-      routes: {
-        '/home': (context) => const HomeScreen(),
-        '/scanner': (context) => const BarcodeScannerScreen(),
-        '/list': (context) => ListScreen(),
-        '/add-item': (context) => const AddItemScreen(),
-      },
     );
   }
 }
